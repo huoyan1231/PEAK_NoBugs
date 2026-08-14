@@ -24,18 +24,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- BepInEx / Harmony 改用 lib 下的真实运行时 DLL（见下方 Reference），
+         此处只保留生成 MyPluginInfo 的 PluginInfoProps 与分析器 -->
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-    <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
     <PackageReference Include="UnityEngine.Modules" Version="6000.3.15" IncludeAssets="compile" />
   </ItemGroup>
 
-  <!-- 游戏程序集引用：Assembly-CSharp 提供 Spider / Scorpion / Beetle / Beehive 等类型 -->
+  <!--
+    本地程序集引用，全部取自游戏/BepInEx 实际安装目录，保证编译期与运行时版本一致。
+    Private=false：不复制到输出目录，插件 DLL 保持单文件。
+  -->
   <ItemGroup>
+    <!-- BepInEx 5.4.23.3：BaseUnityPlugin / BepInPlugin / ConfigEntry / ManualLogSource -->
+    <Reference Include="BepInEx">
+      <HintPath>lib\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- HarmonyX 2.9.0：Harmony / HarmonyPatch / HarmonyPrefix / HarmonyPostfix -->
+    <Reference Include="0Harmony">
+      <HintPath>lib\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- 游戏逻辑：Spider / Scorpion / Beetle / Beehive / BeeSwarm / Antlion / Mob -->
     <Reference Include="Assembly-CSharp">
       <HintPath>lib\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <!-- Mob 继承 MonoBehaviourPunCallbacks、BeeSwarm 继承 MonoBehaviourPun，必须引用 -->
     <Reference Include="PhotonUnityNetworking">
       <HintPath>lib\PhotonUnityNetworking.dll</HintPath>
       <Private>false</Private>
