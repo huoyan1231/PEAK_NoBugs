@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <!-- 游戏基于 Unity 6000，Assembly-CSharp 面向 netstandard2.1 -->
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>nobugs</AssemblyName>
-    <Product>My first plugin</Product>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
@@ -13,13 +13,37 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>nobugs</RootNamespace>
+    <Product>PEAK NoBugs</Product>
+    <AssemblyTitle>PEAK NoBugs</AssemblyTitle>
+    <Description>移除 PEAK 中的所有昆虫（蜘蛛、蝎子、甲虫、蜂群、蚁狮）</Description>
   </PropertyGroup>
+
+  <!-- decompiled/ 只是 dnSpy 反编译出来的参考源码，不参与编译 -->
+  <ItemGroup>
+    <Compile Remove="decompiled\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
     <PackageReference Include="UnityEngine.Modules" Version="6000.3.15" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <!-- 游戏程序集引用：Assembly-CSharp 提供 Spider / Scorpion / Beetle / Beehive 等类型 -->
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>lib\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="PhotonUnityNetworking">
+      <HintPath>lib\PhotonUnityNetworking.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="PhotonRealtime">
+      <HintPath>lib\PhotonRealtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
