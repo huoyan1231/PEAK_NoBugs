@@ -4,6 +4,6 @@
     "website_url": "https://github.com/huoyan1231/PEAK_NoBugs",
     "description": "Removes bugs",
     "dependencies": [
-        "BBepInEx-BepInExPack_PEAK-5.4.75301"
+        "BepInEx-BepInExPack_PEAK-5.4.75301"
     ]
 }
